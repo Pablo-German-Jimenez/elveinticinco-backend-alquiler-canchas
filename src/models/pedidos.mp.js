@@ -24,8 +24,8 @@ const pedidoSchema = new Schema({
          estado:{
             type:String,
             required:true,
-            enum:["pendiente", "completado", "cancelado"],
-         },{timestamps:true}};
+            enum:["pendiente", "completado", "cancelado"]},
+         },{timestamps:true});
 
          const Pedido = mongoose.model("pedido",pedidoSchema);
 
