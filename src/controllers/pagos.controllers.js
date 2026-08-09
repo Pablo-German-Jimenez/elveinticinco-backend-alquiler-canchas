@@ -45,7 +45,7 @@ export const crearOrdenCarrito =async(req,res)=>{
 };
 
 export const recibirWebHook=async(res,req)=>{
-    const payment=req.query;
+   try{ const payment=req.query;
     if(payment.type==='payment'){
         const paymentId = payment['data.id'];
         console.log('Notificación de pago recibida ID',paymentId);
