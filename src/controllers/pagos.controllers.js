@@ -1,8 +1,8 @@
-import {MercadoPagoCondig,Preference} from 'mercadopago';
+import {MercadoPagoConfig,Preference} from 'mercadopago';
 
 //Inicialización del cliente con tu Access token desde el .env
 
-const client = new MercadoPagoCondig({
+const client = new MercadoPagoConfig({
     accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
 });
 
