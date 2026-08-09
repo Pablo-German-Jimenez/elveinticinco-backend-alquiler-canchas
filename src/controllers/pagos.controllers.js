@@ -43,15 +43,23 @@ export const crearOrdenCarrito =async(req,res)=>{
         });
     }
 };
+export const recibirWebHook = async (req, res) => {
+  try {
+    const payment = req.query;
 
-export const recibirWebHook=async(res,req)=>{
-   try{ const payment=req.query;
-    if(payment.type==='payment'){
-        const paymentId = payment['data.id'];
-        console.log('Notificación de pago recibida ID',paymentId);
+    // MercadoPago envía el id del pago cuando este cambia de estado
+    if (payment.type === "payment") {
+      const paymentId = payment["data.id"];
+      console.log("Notificación de pago recibida ID:", paymentId);
+
+      // Aquí puedes buscar el pago en la API de MercadoPago 
+      // y actualizar la orden en tu base de datos (MongoDB)
     }
+
+    // Es obligatorio responder a MercadoPago con un status 200/204
     return res.sendStatus(200);
-}catch(error){
-    console.error('Error procesado Webhook',error)
-    return res.status(500).json({error:error.message});
-}
+  } catch (error) {
+    console.error("Error procesando Webhook:", error);
+    return res.status(500).json({ error: error.message });
+  }
+};
