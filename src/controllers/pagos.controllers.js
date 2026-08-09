@@ -1,8 +1,8 @@
-import {MercadoPagoCondig,Preference} from 'mercadopago';
+import {MercadoPagoConfig,Preference} from 'mercadopago';
 
 //Inicialización del cliente con tu Access token desde el .env
 
-const client = new MercadoPagoCondig({
+const client = new MercadoPagoConfig({
     accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN,
 });
 
@@ -42,4 +42,25 @@ export const crearOrdenCarrito =async(req,res)=>{
             error:error.message,
         });
     }
+};
+
+export const recibirWebHook = async (req, res) => {
+  try {
+    const payment = req.query;
+
+    // MercadoPago envía el id del pago cuando este cambia de estado
+    if (payment.type === "payment") {
+      const paymentId = payment["data.id"];
+      console.log("Notificación de pago recibida ID:", paymentId);
+
+      // Aquí puedes buscar el pago en la API de MercadoPago 
+      // y actualizar la orden en tu base de datos (MongoDB)
+    }
+
+    // Es obligatorio responder a MercadoPago con un status 200/204
+    return res.sendStatus(200);
+  } catch (error) {
+    console.error("Error procesando Webhook:", error);
+    return res.status(500).json({ error: error.message });
+  }
 };
