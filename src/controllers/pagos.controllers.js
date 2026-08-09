@@ -43,3 +43,15 @@ export const crearOrdenCarrito =async(req,res)=>{
         });
     }
 };
+
+export const recibirWebHook=async(res,req)=>{
+    const payment=req.query;
+    if(payment.type==='payment'){
+        const paymentId = payment['data.id'];
+        console.log('Notificación de pago recibida ID',paymentId);
+    }
+    return res.sendStatus(200);
+}catch(error){
+    console.error('Error procesado Webhook',error)
+    return res.status(500).json({error:error.message});
+}
